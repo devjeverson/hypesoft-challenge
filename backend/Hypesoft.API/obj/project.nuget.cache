@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "AdK6HYsDq+0=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\hypesoft-backend\\Hypesoft.API\\Hypesoft.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\olive\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.11\\microsoft.aspnetcore.openapi.9.0.11.nupkg.sha512",
+    "C:\\Users\\olive\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
