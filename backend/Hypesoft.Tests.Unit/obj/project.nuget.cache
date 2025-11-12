@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jHv+stu2F8I=",
+  "dgSpecHash": "saoOSSTOQKI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\hypesoft-backend\\Hypesoft.Tests.Unit\\Hypesoft.Tests.Unit.csproj",
+  "projectFilePath": "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\backend\\Hypesoft.Tests.Unit\\Hypesoft.Tests.Unit.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\olive\\.nuget\\packages\\coverlet.collector\\6.0.2\\coverlet.collector.6.0.2.nupkg.sha512",
     "C:\\Users\\olive\\.nuget\\packages\\microsoft.codecoverage\\17.12.0\\microsoft.codecoverage.17.12.0.nupkg.sha512",

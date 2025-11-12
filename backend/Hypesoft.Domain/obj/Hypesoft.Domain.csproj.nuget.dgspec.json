@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\hypesoft-backend\\Hypesoft.Domain\\Hypesoft.Domain.csproj": {}
+    "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\backend\\Hypesoft.Domain\\Hypesoft.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\hypesoft-backend\\Hypesoft.Domain\\Hypesoft.Domain.csproj": {
+    "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\backend\\Hypesoft.Domain\\Hypesoft.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\hypesoft-backend\\Hypesoft.Domain\\Hypesoft.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\backend\\Hypesoft.Domain\\Hypesoft.Domain.csproj",
         "projectName": "Hypesoft.Domain",
-        "projectPath": "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\hypesoft-backend\\Hypesoft.Domain\\Hypesoft.Domain.csproj",
+        "projectPath": "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\backend\\Hypesoft.Domain\\Hypesoft.Domain.csproj",
         "packagesPath": "C:\\Users\\olive\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\hypesoft-backend\\Hypesoft.Domain\\obj\\",
+        "outputPath": "C:\\Users\\olive\\OneDrive\\Área de Trabalho\\hypesoft-challenge\\backend\\Hypesoft.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\olive\\AppData\\Roaming\\NuGet\\NuGet.Config"
