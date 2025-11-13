@@ -11,11 +11,18 @@ namespace Hypesoft.Infrastructure.Configurations
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            
             // Configurações do MongoDB
             var connectionString = configuration["Mongo:ConnectionString"] ?? "mongodb://localhost:27017";
             var database = configuration["Mongo:Database"] ?? "hypesoft";
 
-            services.AddSingleton<IMongoClient>(_ => new MongoClient(connectionString));
+            //services.AddSingleton<IMongoClient>(_ => new MongoClient(connectionString));
+            var mongoSettings = MongoClientSettings.FromConnectionString(connectionString);
+
+
+            // Configurações de GUID para MongoDB
+            services.AddSingleton<IMongoClient>(_ => new MongoClient(mongoSettings));
+
 
             // Contexto central
             services.AddSingleton<MongoContext>(sp =>

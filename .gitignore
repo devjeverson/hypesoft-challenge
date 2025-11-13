@@ -1,12 +1,6 @@
 ## ============================
 ##        .NET BACKEND
 ## ============================
-
-# Build folders
-bin/
-obj/
-
-# Logs
 *.log
 *.tlog
 
@@ -16,6 +10,11 @@ obj/
 *.suo
 *.userosscache
 *.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+Properties/
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt

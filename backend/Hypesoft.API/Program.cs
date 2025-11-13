@@ -2,8 +2,17 @@ using Hypesoft.Application.Extensions;
 using Hypesoft.Infrastructure.Configurations;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+
+
 
 // SERILOG
 Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
