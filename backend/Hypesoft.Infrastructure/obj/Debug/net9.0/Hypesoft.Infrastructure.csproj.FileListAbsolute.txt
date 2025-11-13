@@ -14,18 +14,3 @@ C:\Users\olive\OneDrive\Área de Trabalho\hypesoft-challenge\backend\Hypesoft.In
 C:\Users\olive\OneDrive\Área de Trabalho\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\refint\Hypesoft.Infrastructure.dll
 C:\Users\olive\OneDrive\Área de Trabalho\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\Hypesoft.Infrastructure.pdb
 C:\Users\olive\OneDrive\Área de Trabalho\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\ref\Hypesoft.Infrastructure.dll
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\bin\Debug\net9.0\Hypesoft.Infrastructure.deps.json
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\bin\Debug\net9.0\Hypesoft.Infrastructure.dll
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\bin\Debug\net9.0\Hypesoft.Infrastructure.pdb
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\bin\Debug\net9.0\Hypesoft.Domain.dll
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\bin\Debug\net9.0\Hypesoft.Domain.pdb
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\Hypesoft.Infrastructure.csproj.AssemblyReference.cache
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\Hypesoft.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\Hypesoft.Infrastructure.AssemblyInfoInputs.cache
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\Hypesoft.Infrastructure.AssemblyInfo.cs
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\Hypesoft.Infrastructure.csproj.CoreCompileInputs.cache
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\Hypesoft.74E4BFA7.Up2Date
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\Hypesoft.Infrastructure.dll
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\refint\Hypesoft.Infrastructure.dll
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\Hypesoft.Infrastructure.pdb
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Infrastructure\obj\Debug\net9.0\ref\Hypesoft.Infrastructure.dll

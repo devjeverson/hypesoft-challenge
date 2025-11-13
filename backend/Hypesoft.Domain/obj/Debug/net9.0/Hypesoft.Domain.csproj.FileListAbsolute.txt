@@ -10,14 +10,3 @@ C:\Users\olive\OneDrive\Área de Trabalho\hypesoft-challenge\backend\Hypesoft.Do
 C:\Users\olive\OneDrive\Área de Trabalho\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\refint\Hypesoft.Domain.dll
 C:\Users\olive\OneDrive\Área de Trabalho\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\Hypesoft.Domain.pdb
 C:\Users\olive\OneDrive\Área de Trabalho\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\ref\Hypesoft.Domain.dll
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\bin\Debug\net9.0\Hypesoft.Domain.deps.json
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\bin\Debug\net9.0\Hypesoft.Domain.dll
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\bin\Debug\net9.0\Hypesoft.Domain.pdb
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\Hypesoft.Domain.GeneratedMSBuildEditorConfig.editorconfig
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\Hypesoft.Domain.AssemblyInfoInputs.cache
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\Hypesoft.Domain.AssemblyInfo.cs
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\Hypesoft.Domain.csproj.CoreCompileInputs.cache
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\Hypesoft.Domain.dll
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\refint\Hypesoft.Domain.dll
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\Hypesoft.Domain.pdb
-C:\Dev\hypesoft-challenge\backend\Hypesoft.Domain\obj\Debug\net9.0\ref\Hypesoft.Domain.dll
