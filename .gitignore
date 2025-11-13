@@ -1,0 +1,113 @@
+## ============================
+##        .NET BACKEND
+## ============================
+
+# Build folders
+bin/
+obj/
+
+# Logs
+*.log
+*.tlog
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Visual Studio cache/options directory
+.vs/
+
+# NuGet packages
+packages/
+*.nupkg
+*.snupkg
+
+# Rider
+.idea/
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Publish output
+publish/
+out/
+
+## ============================
+##           REACT
+## ============================
+
+# Node dependencies
+node_modules/
+
+# React build folders
+build/
+dist/
+
+# Cache
+.cache/
+*.cache
+
+# NPM / Yarn / PNPM logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local environment files
+*.env.local
+*.env.development
+*.env.production
+*.env.test
+
+# React editor artifacts
+*.rc
+*.swp
+*.swo
+
+## ============================
+##          GENERAL
+## ============================
+
+# System
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+
+# Local env (global)
+.env
+.env.*
+
+# OS junk
+*.tmp
+
+## ============================
+##         DOCKER
+## ============================
+
+docker-data/
+docker-volume/
+*.tar
+
+## ============================
+##         VSCODE
+## ============================
+
+.vscode/
+.history/
+
+## ============================
+##         GIT
+## ============================
+
+# Ignore local config
+.gitconfig
