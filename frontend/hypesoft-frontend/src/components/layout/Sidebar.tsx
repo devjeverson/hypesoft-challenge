@@ -7,52 +7,81 @@ import {
   MessageSquare,
   Settings,
   HelpCircle,
+  Tags,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-
-
-type MenuItem = {
-  icon: React.ElementType;
-  label: string;
-  active?: boolean;
-  badge?: number;
-};
-
-type MenuSection = {
-  label: string;
-  items: MenuItem[];
-};
-
-
-const sections: MenuSection[] = [
-  {
-    label: "GENERAL",
-    items: [{ icon: LayoutDashboard, label: "Dashboard", active: true }],
-  },
-  {
-    label: "SHOP",
-    items: [
-      { icon: BarChart2, label: "Statistics" },
-      { icon: Package, label: "Products" },
-      { icon: Users, label: "Customers" },
-      { icon: FileText, label: "Invoice" },
-      { icon: MessageSquare, label: "Message", badge: 4 },
-    ],
-  },
-  {
-    label: "SUPPORT",
-    items: [
-      { icon: Settings, label: "Settings" },
-      { icon: HelpCircle, label: "Help" },
-    ],
-  },
-];
+import { Link, useLocation } from "react-router-dom";
 
 export default function Sidebar() {
+  const { pathname } = useLocation();
+
+  const sections = [
+    {
+      label: "GENERAL",
+      items: [
+        {
+          icon: LayoutDashboard,
+          label: "Dashboard",
+          href: "/",
+        },
+      ],
+    },
+    {
+      label: "SHOP",
+      items: [
+        {
+          icon: BarChart2,
+          label: "Statistics",
+          href: "/statistics",
+        },
+        {
+          icon: Package,
+          label: "Products",
+          href: "/products",
+        },
+        {
+          icon: Tags,
+          label: "Categories",
+          href: "/categories",
+        },
+        {
+          icon: Users,
+          label: "Customers",
+          href: "/customers",
+        },
+        {
+          icon: FileText,
+          label: "Invoice",
+          href: "/invoice",
+        },
+        {
+          icon: MessageSquare,
+          label: "Message",
+          href: "/messages",
+          badge: 4,
+        },
+      ],
+    },
+    {
+      label: "SUPPORT",
+      items: [
+        {
+          icon: Settings,
+          label: "Settings",
+          href: "/settings",
+        },
+        {
+          icon: HelpCircle,
+          label: "Help",
+          href: "/help",
+        },
+      ],
+    },
+  ];
+
   return (
     <aside className="w-64 h-screen bg-white border-r flex flex-col p-6">
-
       {/* Logo */}
       <div className="flex items-center gap-2 mb-10">
         <div className="w-8 h-8 rounded-xl bg-primary" />
@@ -68,26 +97,35 @@ export default function Sidebar() {
             </p>
 
             <ul className="space-y-1">
-              {section.items.map((item) => (
-                <li
-                  key={item.label}
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium cursor-pointer transition-all",
-                    item.active
-                      ? "bg-primary text-white"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  )}
-                >
-                  <item.icon className="w-5 h-5" />
-                  {item.label}
+              {section.items.map((item) => {
+                const Icon = item.icon;
+                const isActive =
+                  pathname === item.href ||
+                  (item.href !== "/" && pathname.startsWith(item.href));
 
-                  {item.badge !== undefined && (
-                    <span className="ml-auto bg-primary/10 text-primary text-xs px-2 py-0.5 rounded-md">
-                      {item.badge}
-                    </span>
-                  )}
-                </li>
-              ))}
+                return (
+                  <li key={item.label}>
+                    <Link
+                      to={item.href}
+                      className={cn(
+                        "flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all",
+                        isActive
+                          ? "bg-primary text-white"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      )}
+                    >
+                      <Icon className="w-5 h-5" />
+                      {item.label}
+
+                      {item.badge !== undefined && (
+                        <span className="ml-auto bg-primary/10 text-primary text-xs px-2 py-0.5 rounded-md">
+                          {item.badge}
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
