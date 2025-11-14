@@ -4,19 +4,19 @@ using Hypesoft.Domain.Repositories;
 
 namespace Hypesoft.Application.Handlers.Categories
 {
-    public class DeleteCategoryHandler : IRequestHandler<DeleteCategoryCommand, Unit>
+    public class DeleteCategoryHandler : IRequestHandler<DeleteCategoryCommand, bool>
     {
-        private readonly ICategoryRepository _repository;
+        private readonly ICategoryRepository _repo;
 
-        public DeleteCategoryHandler(ICategoryRepository repository)
+        public DeleteCategoryHandler(ICategoryRepository repo)
         {
-            _repository = repository;
+            _repo = repo;
         }
 
-        public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
-            await _repository.DeleteAsync(request.Id);
-            return Unit.Value;
+            await _repo.DeleteAsync(request.Id);
+            return true;
         }
     }
 }

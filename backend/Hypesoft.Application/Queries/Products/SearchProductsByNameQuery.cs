@@ -3,5 +3,5 @@ using Hypesoft.Application.DTOs;
 
 namespace Hypesoft.Application.Queries.Products
 {
-    public record GetProductByIdQuery(Guid Id) : IRequest<ProductDto?>;
+    public record SearchProductsByNameQuery(string Name) : IRequest<IEnumerable<ProductDto>>;
 }

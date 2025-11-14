@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using MongoDB.Driver;
 using Hypesoft.Domain.Entities;
 using Hypesoft.Domain.Repositories;
@@ -34,6 +37,12 @@ namespace Hypesoft.Infrastructure.Repositories
         {
             var cursor = await _collection.FindAsync(FilterDefinition<Category>.Empty);
             return await cursor.ToListAsync();
+        }
+
+        public async Task<bool> UpdateAsync(Category category)
+        {
+            var result = await _collection.ReplaceOneAsync(c => c.Id == category.Id, category);
+            return result.IsAcknowledged && result.ModifiedCount > 0;
         }
     }
 }

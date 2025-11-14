@@ -4,19 +4,19 @@ using Hypesoft.Domain.Repositories;
 
 namespace Hypesoft.Application.Handlers.Products
 {
-    public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Unit>
+    public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, bool>
     {
-        private readonly IProductRepository _repository;
+        private readonly IProductRepository _repo;
 
-        public DeleteProductHandler(IProductRepository repository)
+        public DeleteProductHandler(IProductRepository repo)
         {
-            _repository = repository;
+            _repo = repo;
         }
 
-        public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            await _repository.DeleteAsync(request.Id);
-            return Unit.Value;
+            await _repo.DeleteAsync(request.Id);
+            return true;
         }
     }
 }

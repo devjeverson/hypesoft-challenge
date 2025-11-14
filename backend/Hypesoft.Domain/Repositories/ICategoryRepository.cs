@@ -8,6 +8,7 @@ namespace Hypesoft.Domain.Repositories
     public interface ICategoryRepository
     {
         Task AddAsync(Category category);
+        Task<bool> UpdateAsync(Category category);
         Task DeleteAsync(Guid id);
         Task<Category?> GetByIdAsync(Guid id);
         Task<IEnumerable<Category>> GetAllAsync();

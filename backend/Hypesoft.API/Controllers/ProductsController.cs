@@ -3,6 +3,7 @@ using MediatR;
 using Hypesoft.Application.Commands.Products;
 using Hypesoft.Application.Queries.Products;
 using Hypesoft.Application.DTOs;
+using Hypesoft.API.DTOs;
 
 namespace Hypesoft.API.Controllers
 {
@@ -21,7 +22,7 @@ namespace Hypesoft.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
-        // GET ALL (com filtros opcionais)
+        // GET ALL
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll(
             [FromQuery] string? name,
@@ -40,7 +41,7 @@ namespace Hypesoft.API.Controllers
             return result is null ? NotFound() : Ok(result);
         }
 
-        // GET low stock
+        // GET LOW STOCK
         [HttpGet("low-stock")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetLowStock()
         {
@@ -50,11 +51,16 @@ namespace Hypesoft.API.Controllers
 
         // UPDATE
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<ProductDto>> Update(Guid id, [FromBody] UpdateProductCommand command)
+        public async Task<ActionResult<ProductDto>> Update(Guid id, [FromBody] UpdateProductRequest request)
         {
-            if (id != command.Id)
-                return BadRequest("ID do produto não corresponde ao payload.");
-
+            var command = new Application.Commands.Products.UpdateProductCommand(
+                id,
+                request.Name,
+                request.Description,
+                request.Price,
+                request.QuantityInStock,
+                request.CategoryId
+            );
             var result = await _mediator.Send(command);
             return Ok(result);
         }
@@ -63,7 +69,7 @@ namespace Hypesoft.API.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _mediator.Send(new DeleteProductCommand(id));
+            await _mediator.Send(new Application.Commands.Products.DeleteProductCommand(id));
             return NoContent();
         }
     }

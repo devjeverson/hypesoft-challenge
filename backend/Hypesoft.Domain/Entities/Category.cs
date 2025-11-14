@@ -14,5 +14,12 @@ namespace Hypesoft.Domain.Entities
             Id = Guid.NewGuid();
             Name = name;
         }
+
+        public void Update(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Nome da categoria é obrigatório.");
+            Name = name;
+        }
     }
 }
