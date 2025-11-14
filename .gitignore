@@ -110,3 +110,5 @@ docker-volume/
 
 # Ignore local config
 .gitconfig
+
+.fake
