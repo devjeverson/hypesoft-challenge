@@ -32,9 +32,10 @@ namespace Hypesoft.Infrastructure.Repositories
 
         public async Task<IEnumerable<Product>> GetLowStockAsync()
         {
-            var cursor = await _collection.FindAsync(p => p.QuantityInStock < 10);
-            return await cursor.ToListAsync();
+            var filter = Builders<Product>.Filter.Lt(p => p.QuantityInStock, 10);
+            return await _collection.Find(filter).ToListAsync();
         }
+
 
         public async Task<Product?> GetByIdAsync(Guid id)
         {

@@ -21,9 +21,7 @@ namespace Hypesoft.Application.Handlers.Categories
             if (category == null) return false;
 
             category.Update(request.Name);
-            await _repo.UpdateAsync (category);
-
-            return true;
+            return await _repo.UpdateAsync(category);
         }
     }
 }
