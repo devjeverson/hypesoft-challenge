@@ -1,6 +1,6 @@
 using System;
 
-namespace Hypesoft.API.DTOs
+namespace Hypesoft.Application.Commands.Products
 {
     public record UpdateProductRequest(
         string Name,

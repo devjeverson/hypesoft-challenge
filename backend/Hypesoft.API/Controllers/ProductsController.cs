@@ -3,7 +3,13 @@ using MediatR;
 using Hypesoft.Application.Commands.Products;
 using Hypesoft.Application.Queries.Products;
 using Hypesoft.Application.DTOs;
-using Hypesoft.API.DTOs;
+using UpdateProductCommand = Hypesoft.Application.Commands.Products.UpdateProductCommand;
+using DeleteProductCommand = Hypesoft.Application.Commands.Products.DeleteProductCommand;
+using GetAllProductsQuery = Hypesoft.Application.Queries.Products.GetAllProductsQuery;
+using GetProductByIdQuery = Hypesoft.Application.Queries.Products.GetProductByIdQuery;
+using GetLowStockProductsQuery = Hypesoft.Application.Queries.Products.GetLowStockProductsQuery;
+using CreateProductCommand = Hypesoft.Application.Commands.Products.CreateProductCommand;
+using ProductDto = Hypesoft.Application.DTOs.ProductDto;
 
 namespace Hypesoft.API.Controllers
 {
@@ -53,7 +59,7 @@ namespace Hypesoft.API.Controllers
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<ProductDto>> Update(Guid id, [FromBody] UpdateProductRequest request)
         {
-            var command = new Application.Commands.Products.UpdateProductCommand(
+            var command = new Hypesoft.Application.Commands.Products.UpdateProductCommand(
                 id,
                 request.Name,
                 request.Description,
@@ -69,8 +75,9 @@ namespace Hypesoft.API.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _mediator.Send(new Application.Commands.Products.DeleteProductCommand(id));
+            await _mediator.Send(new DeleteProductCommand(id));
             return NoContent();
         }
     }
+
 }

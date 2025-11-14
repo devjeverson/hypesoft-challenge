@@ -10,6 +10,8 @@ using MongoDB.Bson.Serialization.Serializers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
 
@@ -25,6 +27,18 @@ builder.Services.AddSwaggerGen();
 
 // MVC
 builder.Services.AddControllers();
+
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
 
 // Application + Infrastructure
 builder.Services.AddApplication();
@@ -50,6 +64,8 @@ if (app.Environment.IsDevelopment())
 
 // MIDDLEWARES
 app.UseSerilogRequestLogging();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 // app.UseAuthentication();
 // app.UseAuthorization();
