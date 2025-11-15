@@ -1,24 +1,18 @@
 // src/router.tsx
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-// Layouts
 import Dashboard from "@/pages/dashboard/Dashboard";
-
-// Products
 import ProductListPage from "@/pages/products/ProductListPage";
 import ProductEditPage from "@/pages/products/ProductEditPage";
-
-// Categories
 import CategoriesPage from "@/pages/categories/CategoriesPage";
+import LoginPage from "@/pages/login/LoginPage";
+import { useAuthContext } from "@/auth/AuthProvider";
 
-// (Opcional — para Keycloak futuramente)
 const RequireAuth = ({ children }: { children: React.ReactElement }) => {
-  // aqui depois vamos validar o token do Keycloak
-  const isAuthenticated = true;
+  const { initialized, isAuthenticated } = useAuthContext();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  if (!initialized) return <div>Carregando...</div>;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return children;
 };
@@ -27,8 +21,6 @@ export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* Dashboard */}
         <Route
           path="/"
           element={
@@ -37,6 +29,8 @@ export function AppRoutes() {
             </RequireAuth>
           }
         />
+
+        <Route path="/login" element={<LoginPage />} />
 
         {/* Products */}
         <Route
@@ -67,12 +61,13 @@ export function AppRoutes() {
           }
         />
 
-        {/* Not found */}
-        <Route path="*" element={<h1 className="p-10 text-3xl">404 - Página não encontrada</h1>} />
-
+        <Route
+          path="*"
+          element={<h1 className="p-10 text-3xl">404 - Página não encontrada</h1>}
+        />
       </Routes>
     </BrowserRouter>
   );
-
 }
+
 export default AppRoutes;
