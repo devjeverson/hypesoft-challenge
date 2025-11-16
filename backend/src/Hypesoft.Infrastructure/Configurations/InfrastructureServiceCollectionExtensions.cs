@@ -1,21 +1,17 @@
 using Hypesoft.Application.Abstractions.Repositories;
+using Hypesoft.Infrastructure.Data;
 using Hypesoft.Infrastructure.Repositories;
-using Hypesoft.Infrastructure.Repositories.MongoDb;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hypesoft.Infrastructure.Configurations
 {
-    public static class InfrastructureServiceCollectionExtensions
+    public static class InfrastructureServiceRegistration
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            // Registra o MongoDbContext como Singleton, usando a string de conexão completa.
-            services.AddSingleton<MongoDbContext>(sp =>
-            {
-                var connectionString = configuration.GetConnectionString("Mongo");
-                return new MongoDbContext(connectionString);
-            });
+            // Registra o MongoDbContext como Singleton. Ele resolverá IConfiguration automaticamente.
+            services.AddSingleton<MongoDbContext>();
 
             // Registra os repositórios
             services.AddScoped<IProductRepository, ProductRepository>();

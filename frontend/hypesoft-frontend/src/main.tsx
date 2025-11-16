@@ -7,6 +7,7 @@ import { AuthProvider } from "./auth/AuthProvider";
 
 const queryClient = new QueryClient();
 
+console.log("ENV FRONT:", import.meta.env);
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

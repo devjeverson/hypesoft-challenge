@@ -1,33 +1,25 @@
-## ============================
-##        .NET BACKEND
-## ============================
-*.log
-*.tlog
+## .NET BACKEND
 
-# User-specific files
+[Bb]in/
+[Oo]bj/
 *.user
 *.rsuser
 *.suo
 *.userosscache
 *.sln.docstates
 
-# Build results
-[Bb]in/
-[Oo]bj/
-Properties/
-
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
-# Visual Studio cache/options directory
+# Visual Studio
 .vs/
 
-# NuGet packages
+# NuGet
 packages/
 *.nupkg
 *.snupkg
 
-# Rider
+# JetBrains Rider
 .idea/
 
 # Coverage
@@ -35,80 +27,70 @@ coverage/
 *.coverage
 *.coveragexml
 
-# Publish output
+# Publish outputs
 publish/
 out/
 
-## ============================
-##           REACT
-## ============================
+# Logs
+*.log
+*.tlog
 
-# Node dependencies
+
+## REACT FRONTEND
+
 node_modules/
-
-# React build folders
 build/
 dist/
-
-# Cache
 .cache/
 *.cache
 
-# NPM / Yarn / PNPM logs
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Local environment files
+
+
+## ENV FILES
+
+.env
+.env.*
 *.env.local
 *.env.development
 *.env.production
 *.env.test
 
-# React editor artifacts
-*.rc
-*.swp
-*.swo
+# EXCEPTIONS — these must be versioned!
+!.env.example
+!.env.template
 
-## ============================
-##          GENERAL
-## ============================
 
-# System
-Thumbs.db
-.DS_Store
-
-# Logs
-*.log
-
-# Local env (global)
-.env
-.env.*
-
-# OS junk
-*.tmp
-
-## ============================
-##         DOCKER
-## ============================
-
+## ============================================
+##                DOCKER
+## ============================================
 docker-data/
 docker-volume/
 *.tar
 
-## ============================
-##         VSCODE
-## ============================
 
+## ============================================
+##              VS CODE
+## ============================================
 .vscode/
 .history/
 
-## ============================
-##         GIT
-## ============================
 
-# Ignore local config
+## ============================================
+##                 OS
+## ============================================
+Thumbs.db
+.DS_Store
+*.tmp
+
+
+## ============================================
+##                 GIT
+## ============================================
 .gitconfig
-
 .fake
