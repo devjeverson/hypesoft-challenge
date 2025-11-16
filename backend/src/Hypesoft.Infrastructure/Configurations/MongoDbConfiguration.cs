@@ -6,21 +6,25 @@ namespace Hypesoft.Infrastructure.Configurations
 {
     public static class MongoDbConfiguration
     {
-        public static IServiceCollection AddMongoDatabase(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddMongoDb(this IServiceCollection services, IConfiguration configuration)
         {
-            var settings = new MongoDbSettings
+            var connectionString = configuration.GetConnectionString("Mongo");
+
+            var mongoUrl = new MongoUrl(connectionString);
+            var clientSettings = MongoClientSettings.FromUrl(mongoUrl);
+
+            // GuidRepresentation now defaults to V3 internally — no need to configure.
+
+            var client = new MongoClient(clientSettings);
+
+            services.AddSingleton<IMongoClient>(client);
+
+            // Register MongoContext with database
+            services.AddScoped(sp =>
             {
-                ConnectionString = configuration.GetConnectionString("Mongo")
-                    ?? throw new ArgumentNullException("ConnectionStrings:Mongo não foi encontrada."),
-                
-                DatabaseName = configuration["Database:Name"]
-                    ?? throw new ArgumentNullException("Database:Name não foi encontrado.")
-            };
-
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
-
-            services.AddSingleton(database);
+                var client = sp.GetRequiredService<IMongoClient>();
+                return client.GetDatabase(mongoUrl.DatabaseName);
+            });
 
             return services;
         }

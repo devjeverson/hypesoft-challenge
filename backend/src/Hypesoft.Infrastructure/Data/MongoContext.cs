@@ -7,12 +7,15 @@ namespace Hypesoft.Infrastructure.Data
     {
         private readonly IMongoDatabase _database;
 
-        public MongoContext(IMongoClient client, string databaseName)
+        public MongoContext(IMongoDatabase database)
         {
-            _database = client.GetDatabase(databaseName);
+            _database = database;
         }
 
-        public IMongoCollection<Product> Products => _database.GetCollection<Product>("products");
-        public IMongoCollection<Category> Categories => _database.GetCollection<Category>("categories");
+        public IMongoCollection<Category> Categories =>
+            _database.GetCollection<Category>("categories");
+
+        public IMongoCollection<Product> Products =>
+            _database.GetCollection<Product>("products");
     }
 }

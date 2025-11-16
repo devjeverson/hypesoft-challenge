@@ -69,15 +69,18 @@ services:
 
   # 🖥️ API (.NET 9) – modo DEV com hot reload
   api:
-    image: mcr.microsoft.com/dotnet/sdk:9.0
-    working_dir: /src
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    working_dir: /app
     volumes:
-      - ./backend:/src
-    command: dotnet watch run --project src/Hypesoft.API/Hypesoft.API.csproj --urls "http://*:5000"
+      - ./backend/src:/app/src
+    command: dotnet watch run --project /app/src/Hypesoft.API/Hypesoft.API.csproj --urls "http://*:5000"
     ports:
       - "5000:5000"
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_ENVIRONMENT: "Development"
+      Cors__AllowedOrigins: http://localhost:3000
       ConnectionStrings__Mongo: "mongodb://root:root@mongo:27017/hypesoft?authSource=admin"
       Keycloak__Authority: "http://keycloak:8080/realms/HypeSoftRealm"
       Keycloak__Audience: "hypesoft-backend"
@@ -86,6 +89,7 @@ services:
       - keycloak
     networks:
       - hypesoft-net
+
 
   # 🌐 FRONTEND (React + Vite)
   frontend:
@@ -101,9 +105,9 @@ services:
     ports:
       - "3000:80"
     depends_on:
-    - api
+      - api
     networks:
-    - hypesoft-net
+      - hypesoft-net
 
 
 networks:

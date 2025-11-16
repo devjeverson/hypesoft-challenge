@@ -8,6 +8,7 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 
+
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
@@ -67,10 +68,15 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
- 
+
+
+// Guid fix for MongoDB
+MongoGuidConfiguration.Configure();
+
 // Adiciona serviços das camadas de Application e Infrastructure
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddMongoDb(builder.Configuration);
+builder.Services.AddInfrastructure();
 
 // Configura a autenticação JWT com Keycloak
 builder.Services
