@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { Search, Bell, Settings } from "lucide-react";
+import { Search, Bell } from "lucide-react";
 
 export default function Header() {
   return (

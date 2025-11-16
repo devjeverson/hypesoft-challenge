@@ -1,74 +1,100 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Hypesoft.Application.Extensions;
 using Hypesoft.Infrastructure.Configurations;
+using Microsoft.OpenApi.Models;
 using Serilog;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
-
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
-
-
-
-// SERILOG
-Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
 
 builder.Host.UseSerilog();
 
-// SWAGGER
+// ========================================
+// SERVICES
+// ========================================
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// MVC
-builder.Services.AddControllers();
-
-// CORS
-builder.Services.AddCors(options =>
+builder.Services.AddSwaggerGen(c =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.AllowAnyOrigin()
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
-                      });
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "HypeSoft API",
+        Version = "v1"
+    });
+
+    // Adiciona a definição de segurança para JWT Bearer (autenticação)
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Insira o token JWT com o prefixo Bearer. Exemplo: \"Bearer {token}\""
+    });
+
+    // Adiciona o requisito de segurança para usar a definição acima
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+            },
+            new string[] {}
+        }
+    });
 });
 
-// Application + Infrastructure
+builder.Services.AddControllers();
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+ 
+// Adiciona serviços das camadas de Application e Infrastructure
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-
-// (Opcional – Keycloak)
-// builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//     .AddJwtBearer(options =>
-//     {
-//         options.Authority = builder.Configuration["Auth:Authority"];
-//         options.Audience = builder.Configuration["Auth:Audience"];
-//         options.RequireHttpsMetadata = false;
-//     });
+ 
+// Configura a autenticação JWT com Keycloak
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Keycloak:Authority"];
+        options.Audience = builder.Configuration["Keycloak:Audience"];
+        options.RequireHttpsMetadata = false;
+    });
 
 var app = builder.Build();
 
-// DEV TOOLS
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// ========================================
 // MIDDLEWARES
+// ========================================
 app.UseSerilogRequestLogging();
 
 app.UseCors(MyAllowSpecificOrigins);
 
-// app.UseAuthentication();
-// app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

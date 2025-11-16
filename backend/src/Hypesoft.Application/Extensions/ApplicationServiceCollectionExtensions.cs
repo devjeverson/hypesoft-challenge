@@ -1,8 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using System.Reflection;
 using FluentValidation;
 using AutoMapper;
+using Microsoft.Extensions.DependencyInjection; // <- essencial
 
 namespace Hypesoft.Application.Extensions
 {
@@ -18,3 +18,4 @@ namespace Hypesoft.Application.Extensions
         }
     }
 }
+

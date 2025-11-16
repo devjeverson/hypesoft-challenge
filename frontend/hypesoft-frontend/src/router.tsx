@@ -1,11 +1,14 @@
-// src/router.tsx
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Dashboard from "@/pages/dashboard/Dashboard";
 import ProductListPage from "@/pages/products/ProductListPage";
 import ProductEditPage from "@/pages/products/ProductEditPage";
+import ProductCreate from "@/pages/products/ProductCreate";
 import CategoriesPage from "@/pages/categories/CategoriesPage";
 import LoginPage from "@/pages/login/LoginPage";
+
+import AppLayout from "@/components/layout/AppLayout";
+
 import { useAuthContext } from "@/auth/AuthProvider";
 
 const RequireAuth = ({ children }: { children: React.ReactElement }) => {
@@ -17,56 +20,39 @@ const RequireAuth = ({ children }: { children: React.ReactElement }) => {
   return children;
 };
 
-export function AppRoutes() {
+function AppRoutes() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <RequireAuth>
-              <Dashboard />
-            </RequireAuth>
-          }
-        />
+    <Routes>
+      {/* 🔓 ROTA PÚBLICA */}
+      <Route path="/login" element={<LoginPage />} />
 
-        <Route path="/login" element={<LoginPage />} />
+      {/* 🔐 ROTAS PROTEGIDAS — TODAS DENTRO DO LAYOUT */}
+      <Route
+        path="/"
+        element={
+          <RequireAuth>
+            <AppLayout />
+          </RequireAuth>
+        }
+      >
+        {/* index = "/" */}
+        <Route index element={<Dashboard />} />
 
         {/* Products */}
-        <Route
-          path="/products"
-          element={
-            <RequireAuth>
-              <ProductListPage />
-            </RequireAuth>
-          }
-        />
-
-        <Route
-          path="/products/edit/:id"
-          element={
-            <RequireAuth>
-              <ProductEditPage />
-            </RequireAuth>
-          }
-        />
+        <Route path="products" element={<ProductListPage />} />
+        <Route path="products/new" element={<ProductCreate />} />
+        <Route path="products/edit/:id" element={<ProductEditPage />} />
 
         {/* Categories */}
-        <Route
-          path="/categories"
-          element={
-            <RequireAuth>
-              <CategoriesPage />
-            </RequireAuth>
-          }
-        />
+        <Route path="categories" element={<CategoriesPage />} />
+      </Route>
 
-        <Route
-          path="*"
-          element={<h1 className="p-10 text-3xl">404 - Página não encontrada</h1>}
-        />
-      </Routes>
-    </BrowserRouter>
+      {/* 404 */}
+      <Route
+        path="*"
+        element={<h1 className="p-10 text-3xl">404 - Página não encontrada</h1>}
+      />
+    </Routes>
   );
 }
 

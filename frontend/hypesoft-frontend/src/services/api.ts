@@ -1,5 +1,7 @@
 import keycloak from "@/auth/keycloak";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 export const api = {
   async request(path: string, options: RequestInit = {}) {
     const headers = new Headers(options.headers ?? {});
@@ -10,7 +12,7 @@ export const api = {
 
     headers.set("Content-Type", "application/json");
 
-    const res = await fetch(path, { ...options, headers });
+    const res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
 
     if (!res.ok) {
       const text = await res.text();
@@ -46,4 +48,3 @@ export const api = {
     return this.request(path, { method: "DELETE" });
   },
 };
-

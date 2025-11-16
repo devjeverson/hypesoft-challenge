@@ -1,0 +1,125 @@
+services:
+  # 🔐 KEYCLOAK
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0
+    command:
+      - start-dev
+      - --import-realm
+    ports:
+     - "8080:8080"
+    environment:
+     KEYCLOAK_ADMIN: admin
+     KEYCLOAK_ADMIN_PASSWORD: admin
+     KC_DB: postgres
+     KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+     KC_DB_USERNAME: keycloak
+     KC_DB_PASSWORD: keycloak
+
+    # LIBERAR FRONTEND NO IFRAME
+     KC_CONTENT_SECURITY_POLICY: "frame-ancestors 'self' http://localhost:3000"
+     KC_FRAME_OPTIONS: "ALLOW-FROM http://localhost:3000"
+
+    volumes:
+      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
+    networks:
+    - hypesoft-net
+    depends_on:
+      - keycloak-db
+
+
+  keycloak-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - keycloak_db:/var/lib/postgresql/data
+    networks:
+      - hypesoft-net
+
+  #  MONGO
+ 
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - hypesoft-net
+ 
+  #  MONGO EXPRESS
+  
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_SERVER: mongo
+      # Adiciona autenticação para a própria interface do Mongo Express
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: password
+    networks:
+      - hypesoft-net
+    depends_on:
+      - mongo
+ 
+  #  API BACKEND (.NET 9)
+ 
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      # Usar o estágio 'build' que contém o SDK do .NET para rodar 'dotnet watch'
+      target: build
+    # Mapeia o código-fonte do backend para dentro do container
+    volumes:
+      - ./backend:/app
+    # Mapeia a porta 5000 do host para a porta 5000 do container
+    ports:
+      - "5000:5000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__Mongo: "mongodb://root:root@mongo:27017/hypesoft?authSource=admin"
+      Keycloak__Authority: "http://keycloak:8080/realms/HypeSoftRealm"
+      Keycloak__Audience: "hypesoft-backend"
+    depends_on:
+      - mongo
+      - keycloak
+    # Define o diretório de trabalho para onde o volume foi montado
+    working_dir: /app
+    # Executa o watch no projeto específico
+    command: dotnet watch run --project "src/Hypesoft.API/Hypesoft.API.csproj" --urls "http://*:5000"
+    networks:
+      - hypesoft-net
+
+  #  FRONTEND (React + Vite)
+
+  frontend:
+    # Configuração para build de produção usando o Dockerfile
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: "http://localhost:5000"
+    ports:
+      - "3000:80" # Mapeia a porta 3000 do host para a porta 80 do NGINX no container
+    depends_on:
+      - api
+    networks:
+      - hypesoft-net
+
+networks:
+  hypesoft-net:
+    driver: bridge
+
+volumes:
+  keycloak_db:

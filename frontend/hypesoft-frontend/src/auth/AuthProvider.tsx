@@ -1,89 +1,65 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import keycloak from "./keycloak";
+import Keycloak from "keycloak-js";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
-type AuthContextType = {
+interface AuthContextType {
   initialized: boolean;
   isAuthenticated: boolean;
-  token?: string | null;
-  username?: string | null;
+  keycloak: Keycloak | null;
   login: () => void;
   logout: () => void;
-  getToken: () => Promise<string | undefined>;
-};
+}
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({
+  initialized: false,
+  isAuthenticated: false,
+  keycloak: null,
+  login: () => {},
+  logout: () => {},
+});
+
+export const useAuthContext = () => useContext(AuthContext);
+
+const keycloakInstance = new Keycloak({
+  url: import.meta.env.VITE_KEYCLOAK_URL,
+  realm: import.meta.env.VITE_KEYCLOAK_REALM,
+  clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
+});
+
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [initialized, setInitialized] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
-  const [username, setUsername] = useState<string | null>(null);
+  const [auth, setAuth] = useState<AuthContextType>({
+    initialized: false,
+    isAuthenticated: false,
+    keycloak: null,
+    login: () => keycloakInstance.login(),
+    logout: () => keycloakInstance.logout(),
+  });
+  const didInit = useRef(false);
 
-useEffect(() => {
-  keycloak
-    .init({
-      onLoad: window.location.href.includes("code=")
-        ? "check-sso"
-        : "login-required",
-      pkceMethod: "S256",
-      silentCheckSsoRedirectUri:
-        window.location.origin + "/silent-check-sso.html",
-    })
-    .then((auth) => {
-      setInitialized(true);
-      setIsAuthenticated(auth);
-      setToken(keycloak.token ?? null);
+  useEffect(() => {
+    if (didInit.current) return;
+    didInit.current = true;
 
-      if (keycloak.tokenParsed) {
-        const parsed = keycloak.tokenParsed as any;
-        setUsername(parsed.preferred_username || parsed.email || null);
-      }
+    keycloakInstance
+      .init({
+        onLoad: "login-required",
+        checkLoginIframe: false,
+      })
+      .then((authenticated) => {
+        setAuth((prevAuth) => ({
+          ...prevAuth,
+          initialized: true,
+          isAuthenticated: authenticated,
+          keycloak: keycloakInstance,
+        }));
+      });
+  }, []);
 
-      keycloak.onTokenExpired = () => {
-        keycloak
-          .updateToken(30)
-          .then(() => setToken(keycloak.token ?? null))
-          .catch(() => keycloak.logout());
-      };
-    })
-    .catch(() => {
-      setInitialized(true);
-      setIsAuthenticated(false);
-    });
-}, []);
-
-
-  const login = () => keycloak.login();
-  const logout = () => keycloak.logout();
-
-  const getToken = async () => {
-    try {
-      await keycloak.updateToken(30);
-      return keycloak.token ?? undefined;
-    } catch {
-      return undefined;
-    }
-  };
-
-  return (
-    <AuthContext.Provider
-      value={{
-        initialized,
-        isAuthenticated,
-        token,
-        username,
-        login,
-        logout,
-        getToken,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-export const useAuthContext = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuthContext must be used within AuthProvider");
-  return ctx;
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };
