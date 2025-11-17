@@ -93,21 +93,21 @@ services:
 
   # 🌐 FRONTEND (React + Vite)
   frontend:
+    container_name: hypesoft-frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args:
-        VITE_API_URL: "http://localhost:5000"
-        VITE_KEYCLOAK_URL: "http://localhost:8080"
-        VITE_KEYCLOAK_REALM: "HypeSoftRealm"
-        VITE_KEYCLOAK_CLIENT_ID: "frontend"
-        VITE_REDIRECT_URL: "http://localhost:3000"
     ports:
-      - "3000:80"
-    depends_on:
-      - api
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+      - VITE_KEYCLOAK_URL=http://localhost:8080
+      - VITE_KEYCLOAK_REALM=HypeSoftRealm
+      - VITE_KEYCLOAK_CLIENT_ID=hypesoft-frontend
+      - VITE_REDIRECT_URL=http://localhost:3000
+      - KC_SPI_LOGIN_PROTOCOL_OPENID_CONNECT_LEGACY_LOGOUT_REDIRECT_URI=true
     networks:
-      - hypesoft-net
+    - hypesoft-net
 
 
 networks:

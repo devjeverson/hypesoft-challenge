@@ -9,6 +9,7 @@ export function useCategories() {
     queryKey: KEY,
     queryFn: categoriesService.list,
     staleTime: 1000 * 60 * 5,
+    initialData: [],
   });
 }
 
@@ -16,7 +17,9 @@ export function useCreateCategory() {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: Omit<Category, "id">) => categoriesService.create(payload),
+    mutationFn: (payload: Omit<Category, "id">) =>
+      categoriesService.create(payload),
+
     onSuccess: () => qc.invalidateQueries({ queryKey: KEY }),
   });
 }

@@ -4,7 +4,8 @@ import type { Category } from "@/types/product";
 export const categoriesService = {
   list: async (): Promise<Category[]> => {
     const res = await api.get("/api/categories");
-    return res.data;
+    const data = res?.data;
+    return Array.isArray(data) ? data : [];
   },
 
   create: async (payload: Omit<Category, "id">): Promise<Category> => {

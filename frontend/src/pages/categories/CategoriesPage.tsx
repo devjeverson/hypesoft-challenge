@@ -86,9 +86,9 @@ export default function CategoriesPage() {
             <CardContent>
               {isLoading ? (
                 <p>Carregando...</p>
-              ) : categories && categories.length > 0 ? (
+              ) : (categories ?? []).length > 0 ? (
                 <ul className="space-y-2">
-                  {categories.map((c) => (
+                  {(categories ?? []).map((c) => (
                     <li
                       key={c.id}
                       className="flex items-center justify-between border rounded-lg p-3 bg-white"

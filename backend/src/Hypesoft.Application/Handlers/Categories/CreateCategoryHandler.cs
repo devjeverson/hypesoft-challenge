@@ -1,28 +1,30 @@
-using MediatR;
-using AutoMapper;
 using Hypesoft.Application.Commands.Categories;
 using Hypesoft.Application.DTOs;
-using Hypesoft.Domain.Entities;
 using Hypesoft.Domain.Repositories;
+using Hypesoft.Domain.Entities;
+using MediatR;
 
 namespace Hypesoft.Application.Handlers.Categories
 {
     public class CreateCategoryHandler : IRequestHandler<CreateCategoryCommand, CategoryDto>
     {
-        private readonly ICategoryRepository _repository;
-        private readonly IMapper _mapper;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public CreateCategoryHandler(ICategoryRepository repository, IMapper mapper)
+        public CreateCategoryHandler(ICategoryRepository categoryRepository)
         {
-            _repository = repository;
-            _mapper = mapper;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task<CategoryDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
+            // Cria usando o novo construtor (somente name)
             var category = new Category(request.Name);
-            await _repository.AddAsync(category);
-            return _mapper.Map<CategoryDto>(category);
+
+            // Salva no banco
+            await _categoryRepository.AddAsync(category);
+
+            // Retorna DTO usando o novo construtor também
+            return new CategoryDto(category.Id, category.Name);
         }
     }
 }
